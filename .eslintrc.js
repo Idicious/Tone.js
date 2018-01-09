@@ -33,6 +33,10 @@ module.exports = {
 		"no-unneeded-ternary": [ "error" ],
 		"object-curly-spacing": [ "error" , "always" ],
 		"space-unary-ops": [ "error" , { "words" : true, "nonwords" : false } ],
+		"block-spacing" : ["error", "always"],
+		"keyword-spacing" : ["error", { "before": true }],
+		"space-before-function-paren": ["error", "never"],
+		"comma-spacing": ["error", { "before": false, "after": true }]
 		// "one-var-declaration-per-line": [ "error" , "always" ],
 		// "object-curly-newline": [ "error" , { "multiline": true }],
 		// "array-bracket-newline": [ "error" , "always" ],

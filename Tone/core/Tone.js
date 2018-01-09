@@ -94,7 +94,7 @@ define(function(){
 				for (var i = 0; i < attrSplit.length - 1; i++){
 					parent = parent[attrSplit[i]];
 					if (parent instanceof Tone) {
-						attrSplit.splice(0,i+1);
+						attrSplit.splice(0, i+1);
 						var innerParam = attrSplit.join(".");
 						parent.set(innerParam, value);
 						continue paramLoop;
@@ -119,6 +119,8 @@ define(function(){
 				if (param.value !== value){
 					param.value = value;
 				}
+			} else if (Tone.TimeBase && param instanceof Tone.TimeBase){
+				parent[attr] = value;
 			} else if (param instanceof Tone){
 				param.set(value);
 			} else if (param !== value){
@@ -460,7 +462,7 @@ define(function(){
 	 *  @memberOf Tone
 	 */
 	Tone.dbToGain = function(db) {
-		return Math.pow(2, db / 6);
+		return Math.pow(10, db / 20);
 	};
 
 	/**
@@ -486,7 +488,7 @@ define(function(){
 	 * tone.intervalToFrequencyRatio(-12); // 0.5
 	 */
 	Tone.intervalToFrequencyRatio = function(interval){
-		return Math.pow(2,(interval/12));
+		return Math.pow(2, (interval/12));
 	};
 
 	///////////////////////////////////////////////////////////////////////////

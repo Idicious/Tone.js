@@ -1,4 +1,4 @@
-define(["Tone/core/Tone", "Tone/signal/TimelineSignal",
+define(["Tone/core/Tone", "Tone/signal/Signal",
 	"Tone/signal/Pow", "Tone/type/Type", "Tone/core/AudioNode"], function(Tone){
 
 	"use strict";
@@ -81,7 +81,7 @@ define(["Tone/core/Tone", "Tone/signal/TimelineSignal",
 
 		/**
 		 *  the signal
-		 *  @type {Tone.TimelineSignal}
+		 *  @type {Tone.Signal}
 		 *  @private
 		 */
 		this._sig = this.output = new Tone.Signal(0);
@@ -284,7 +284,7 @@ define(["Tone/core/Tone", "Tone/signal/TimelineSignal",
 				this._sig.linearRampTo(0, release, time);
 			} else if (this._releaseCurve === "exponential"){
 				this._sig.targetRampTo(0, release, time);
-			} else{
+			} else {
 				var curve = this._releaseCurve;
 				if (Tone.isArray(curve)){
 					this._sig.cancelAndHoldAtTime(time);
@@ -328,7 +328,7 @@ define(["Tone/core/Tone", "Tone/signal/TimelineSignal",
 	 *  @param  {Time} after
 	 *  @returns {Tone.Envelope} this
 	 */
-	Tone.Envelope.prototype.cancel = function (after) {
+	Tone.Envelope.prototype.cancel = function(after) {
 		this._sig.cancelScheduledValues(after);
 		return this;
 	};
