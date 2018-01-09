@@ -1,4 +1,4 @@
-define(["Tone/core/Tone", "Tone/instrument/Instrument", "Tone/core/Buffers", "Tone/source/BufferSource"], function (Tone) {
+define(["Tone/core/Tone", "Tone/instrument/Instrument", "Tone/core/Buffers", "Tone/source/BufferSource"], function(Tone) {
 
 	/**
 	 * @class Automatically interpolates between a set of pitched samples. Pass in an object which maps the note's pitch or midi value to the url, then you can trigger the attack and release of that note like other instruments. By automatically repitching the samples, it is possible to play pitches which were not explicitly included which can save loading time.
@@ -92,7 +92,7 @@ define(["Tone/core/Tone", "Tone/instrument/Instrument", "Tone/core/Buffers", "To
 	Tone.Sampler.prototype._findClosest = function(midi){
 		var MAX_INTERVAL = 24;
 		var interval = 0;
-		while(interval < MAX_INTERVAL){
+		while (interval < MAX_INTERVAL){
 			// check above and below
 			if (this._buffers.has(midi + interval)){
 				return -interval;
@@ -163,11 +163,31 @@ define(["Tone/core/Tone", "Tone/instrument/Instrument", "Tone/core/Buffers", "To
 		time = this.toSeconds(time);
 		for (var note in this._activeSources){
 			var sources = this._activeSources[note];
-			while(sources.length){
+			while (sources.length){
 				var source = sources.shift().source;
 				source.stop(time + this.release, this.release);
 			}
 		}
+		return this;
+	};
+
+	/**
+	 * Sync the instrument to the Transport. All subsequent calls of
+	 * [triggerAttack](#triggerattack) and [triggerRelease](#triggerrelease)
+	 * will be scheduled along the transport.
+	 * @example
+	 * synth.sync()
+	 * //schedule 3 notes when the transport first starts
+	 * synth.triggerAttackRelease('8n', 0)
+	 * synth.triggerAttackRelease('8n', '8n')
+	 * synth.triggerAttackRelease('8n', '4n')
+	 * //start the transport to hear the notes
+	 * Transport.start()
+	 * @returns {Tone.Instrument} this
+	 */
+	Tone.Sampler.prototype.sync = function(){
+		this._syncMethod("triggerAttack", 1);
+		this._syncMethod("triggerRelease", 1);
 		return this;
 	};
 

@@ -1,6 +1,6 @@
 define(["Tone/core/Tone", "Tone/instrument/Instrument", "Tone/source/FMOscillator", "Tone/component/Filter",
 	"Tone/component/FrequencyEnvelope", "Tone/component/AmplitudeEnvelope", "Tone/core/Gain",
-	"Tone/signal/Scale", "Tone/signal/Multiply"], function (Tone) {
+	"Tone/signal/Scale", "Tone/signal/Multiply"], function(Tone) {
 
 	/**
 	 *  Inharmonic ratio of frequencies based on the Roland TR-808
@@ -157,6 +157,26 @@ define(["Tone/core/Tone", "Tone/instrument/Instrument", "Tone/source/FMOscillato
 	Tone.MetalSynth.prototype.triggerRelease = function(time) {
 		time = this.toSeconds(time);
 		this.envelope.triggerRelease(time);
+		return this;
+	};
+
+	/**
+	 * Sync the instrument to the Transport. All subsequent calls of
+	 * [triggerAttack](#triggerattack) and [triggerRelease](#triggerrelease)
+	 * will be scheduled along the transport.
+	 * @example
+	 * synth.sync()
+	 * //schedule 3 notes when the transport first starts
+	 * synth.triggerAttackRelease('8n', 0)
+	 * synth.triggerAttackRelease('8n', '8n')
+	 * synth.triggerAttackRelease('8n', '4n')
+	 * //start the transport to hear the notes
+	 * Transport.start()
+	 * @returns {Tone.Instrument} this
+	 */
+	Tone.MetalSynth.prototype.sync = function(){
+		this._syncMethod("triggerAttack", 0);
+		this._syncMethod("triggerRelease", 0);
 		return this;
 	};
 

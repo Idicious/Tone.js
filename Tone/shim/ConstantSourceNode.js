@@ -1,6 +1,6 @@
 define(["Tone/core/Tone", "Tone/shim/AudioContext", "Tone/core/Context", "Tone/core/Gain"], function(Tone){
 
-	if (Tone.supported && !window.ConstantSourceNode){
+	if (Tone.supported && !AudioContext.prototype.createConstantSource){
 
 		var ConstantSourceNode = function(context){
 			this.context = context;
